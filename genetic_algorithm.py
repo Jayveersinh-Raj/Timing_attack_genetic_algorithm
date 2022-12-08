@@ -1,11 +1,15 @@
 from Password.crack_password import crack_password
 from Match_password.check_password import check_password
 from random import randint
-import sys
 import string
 import numpy as np
 from Match_password.check_password import check_password
 import timeit
+import yaml
+
+# read the hyper-parameters from yaml file using with context manager
+with open('hyperparameters.yaml') as parameters:
+       hyper_parameter = yaml.load(parameters, Loader=yaml.FullLoader)
 
 # class with methods of the entire genetic algorithm loop
 class GeneticAlgorithm:
@@ -16,27 +20,29 @@ class GeneticAlgorithm:
 
     # function to populate the population
     @classmethod
-    def populate(cls, target, target_len,n) -> list:
+    def populate(cls, target, target_len, n) -> list:
 
-    # empty list to store our initial population
+      # empty list to store our initial population
       population = []
-       
-      # Size of population is n with size equal to the target
       for _ in range(n):
-        # each element in population is a parent for future generations
+      # each element in population is a parent for future generations
         parent =""
-        potential_parent = []
-        times = np.empty(target_len)
+        char_found = []
         # generating parents randomly using the ascii values of characters
-        for i in range(97, 122):
-           trials = 1000
+        for i in range(target_len):
+         cf = ""
+         times = []
+         for j in range(hyper_parameter['lower_limit'], hyper_parameter['upper_limit']):
+           trials = 100
            time_taken = timeit.repeat(stmt = 'check_password(user, str)',
-                                 setup = f'user = {target!r}; input_str = {chr(i)!r}',
+                                 setup = f'user = {target!r}; input_str = {cf + chr(j)!r}',
                                  globals = globals(),
                                  number = trials,
                                  repeat=10)
-           times[i] = min(time_taken)
-        parent = parent + str()
+           times.append(min(time_taken))
+         cf+= chr(97 + times.index(max(times)))
+         char_found.append(chr(97 + times.index(max(times))))
+        parent = ''.join(char_found)
   
         # once the loop ends we have a parent  
         population.append(parent)
@@ -58,22 +64,14 @@ class GeneticAlgorithm:
        score += crack_password(user, individual[i])
       return score
   
-      # for each character if they are the same and in the correct position
-     # for i in range(len(target)):
-     #     if(target[i] == individual[i]):
-     #         score+=1      
-     #     else:
-     #         pass
-     #       
-
 
     # function to create a mating pool for cross over by populating parents according to their fitting
     @classmethod
-    def select(cls, population, scores, max_score) -> list:
+    def select(cls, population, scores) -> list:
       parents_to_breed = []
       # scores in integer values
-      p1 = cls.accept(population,scores, max_score)
-      p2 = cls.accept(population, scores, max_score)
+      p1 = cls.accept(population,scores)
+      p2 = cls.accept(population, scores)
       parents_to_breed.append(p1)
       parents_to_breed.append(p2)
             
@@ -81,7 +79,7 @@ class GeneticAlgorithm:
 
 
     # check the probabilities of generated parent meets the criteria with random number probability
-    def accept(population, scores, max_score):
+    def accept(population, scores) -> list:
       while True:
         parent_index = randint(0, len(population)-1)
         rand_num = np.random.randn()
@@ -101,21 +99,30 @@ class GeneticAlgorithm:
       return child
 
     
-    # function for mutation
-    def mutate(individual) -> string:
-      
+     # function for mutation
+    def mutate(individual, chance) -> string:
+     
+      # if chance is not provided as percentage, multiply by 100
+      if(chance<=1):
+         chance = chance * 100
+         random_char = randint(hyper_parameter['lower_limit'], hyper_parameter['upper_limit'])
+      else:
+          pass
+
       # to store genes of an individual (characters)
       genes = []
       for i in individual:
           genes.append(i)
-
-      rand_num = randint(0, len(genes)-1)
-
+      
       # according to given mutation chance change characters/genes of an individual
-      ran_value = randint(97, 122)
-      genes[rand_num] = chr(ran_value)
+      for i in range(len(genes)):
+           mutation_genes = randint(0, 100)
+           gene_to_modify = randint(0, len(genes)-1)
+           if (mutation_genes <= chance):
+              genes[gene_to_modify] = chr(random_char)
+   
       individual = ''.join(genes)
-
+      
       return individual
 
 

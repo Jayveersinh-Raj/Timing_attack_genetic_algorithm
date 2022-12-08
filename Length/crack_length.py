@@ -3,6 +3,7 @@ import timeit
 import numpy as np
 from Database.database import database
 
+# firstly check the password length, than checks its correctness
 def check_password(user, guess):
     actual = database[user]
 

@@ -1,0 +1,17 @@
+---
+    # size of population
+    population_size: 100
+    
+    # mutation percentage
+    mutation_per: 0.01
+
+    # early stop for the generations till which no better solution found
+    dropout: True
+    dropout_number: 20
+    
+    # number of epochs
+    n_generations: 50
+
+    # ascii character limits
+    lower_limit: 97
+    upper_limit: 122
