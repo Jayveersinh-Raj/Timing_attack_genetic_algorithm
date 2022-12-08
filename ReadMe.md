@@ -14,6 +14,9 @@
 * *Length* &rarr; The program utilizes to approximate length for computation information leaked by verification from Database.
 * *Password* &rarr; Represents the login attempt that is trying the genetically found passwords of the found length to get their timing information.
 
+### Project Report
+*Report.pdf* &rarr; IEEE format project report.
+
 ### The programs that executes and puts everything together
 * *genetic_algorithm.py* &rarr; The class that contains all the functions of the genetic algorithms, that main_loop_ga.py, and main.py can utilize
 * *main_loop_ga.py* &rarr; The function that repeatedly runs all the functions (except `populate` because `main.py` will do it, although it can do it too) from the genetic algorithm class until, either early stopping, generation limit, or login successfull is achivied
