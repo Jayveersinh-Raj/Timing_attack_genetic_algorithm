@@ -2,7 +2,7 @@ from random import randint
 from genetic_algorithm import GeneticAlgorithm as ga
 import string
 
-# storing good individuals, and good times
+# to store good individuals, and good times
 best_so_far = ""
 best_max_time = 0
 

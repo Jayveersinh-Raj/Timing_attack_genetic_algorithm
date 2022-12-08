@@ -11,7 +11,7 @@ import yaml
 with open('hyperparameters.yaml') as parameters:
        hyper_parameter = yaml.load(parameters, Loader=yaml.FullLoader)
 
-# class with methods of the entire genetic algorithm loop
+# A class with methods of the entire genetic algorithm loop
 class GeneticAlgorithm:
 
     def __init__(self) -> None:

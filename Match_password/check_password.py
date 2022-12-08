@@ -1,6 +1,6 @@
 from Database.database import database
 
-# The function that matches the password, analogous to back end server that performs the computation
+# A function that matches the password, analogous to back end server that performs the computation
 def check_password(user, guess) -> bool:
     actual = database[user]
 

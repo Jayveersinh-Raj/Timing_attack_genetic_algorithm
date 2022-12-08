@@ -4,7 +4,7 @@ from genetic_algorithm import GeneticAlgorithm
 import main_loop_ga as main_loop
 import yaml
 
-
+# The main driver code
 if __name__ == "__main__":
 
     # read the hyper-parameters from yaml file using with context manager

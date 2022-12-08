@@ -12,6 +12,6 @@
     # number of epochs
     n_generations: 50
 
-    # ascii character limits
+    # ASCII character limits
     lower_limit: 97
     upper_limit: 122

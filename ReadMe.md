@@ -8,7 +8,7 @@
 ## Project structure
 ### Serverside
 * *Database* &rarr; Represents a database that the server utilizes for verification. 
-* *Match password* &rarr; Represents the server that is relying on Database for verification.
+* *Match password* &rarr; Represents the server that relies on Database for verification.
 
 ### Utlization by the attacker
 * *Length* &rarr; The program utilizes to approximate length for computation information leaked by verification from Database.

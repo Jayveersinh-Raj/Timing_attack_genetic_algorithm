@@ -1,2 +1,2 @@
-# importing the database
+# Importing the database
 from Database.database import database
